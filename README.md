@@ -29,7 +29,7 @@ result, err := swarm.Run(ctx, swarm.RunRequest{
     WorkDir:          ".work",
     ID:               "550e8400-e29b-41d4-a716-446655440000",
     RepoURL:          "https://github.com/Clivern/Diffsay.git",
-    Prompt:           "Add Gemfile.lock to LOW_PRIORITY_FILES in src/diffsay/const.py",
+    Prompt:           "Add Gemfile.lock to LOW_PRIORITY_FILES",
     PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
     OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
     DockerImage:      "swarm:v0.1.0",
