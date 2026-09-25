@@ -1,8 +1,8 @@
-# Swarm
+## Swarm
 
 Go library that clones a git repo, runs [Pi](https://pi.dev/) headless in Docker against it, and returns the unified diff.
 
-## Prerequisites
+### Prerequisites
 
 - Go 1.25+
 - Docker (running)
@@ -14,13 +14,13 @@ Build the Pi image once from this repo:
 docker build -t swarm-pi:local .
 ```
 
-## Install
+### Install
 
 ```bash
 go get github.com/clivern/swarm
 ```
 
-## Usage
+### Usage
 
 ```go
 result, err := swarm.Run(ctx, swarm.RunRequest{
@@ -32,6 +32,7 @@ result, err := swarm.Run(ctx, swarm.RunRequest{
     OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
     DockerImage:      "swarm-pi:local",
 })
+
 // result.Patch, result.Summary, result.RepoDir, result.OutDir
 ```
 
@@ -56,5 +57,3 @@ GitCloneAuth: swarm.GitCloneAuth{
 },
 RepoURL: "git@github.com:org/private.git",
 ```
-
-Clones use [go-git](https://github.com/go-git/go-git); the host does not need the `git` CLI.
