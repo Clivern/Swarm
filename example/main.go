@@ -26,11 +26,22 @@ import (
 )
 
 var tasks = []string{
-	`Add "Gemfile.lock" to LOW_PRIORITY_FILES in src/diffsay/const.py if missing. Only edit that file.`,
-	`Add "Poetry.lock" to LOW_PRIORITY_FILES in src/diffsay/const.py if missing. Only edit that file.`,
-	`In tests/test_cli.py add function test_uv_lock_in_low_priority_files: import LOW_PRIORITY_FILES from diffsay.const and assert "uv.lock" in LOW_PRIORITY_FILES. Only edit tests/test_cli.py.`,
-	`Add a one-sentence docstring to the module at the top of src/diffsay/const.py explaining LOW_PRIORITY_FILES.`,
-	`In README.md under ### Develop add this line immediately after the heading (before the code block): "Use uv to sync dependencies and run checks." Do not skip; README must change even if pytest is mentioned in the code block below.`,
+	`Add "Gemfile.lock" to LOW_PRIORITY_FILES in src/diffsay/const.py if missing.
+Only edit that file.`,
+
+	`Add "Poetry.lock" to LOW_PRIORITY_FILES in src/diffsay/const.py if missing.
+Only edit that file.`,
+
+	`In tests/test_cli.py add function test_uv_lock_in_low_priority_files:
+import LOW_PRIORITY_FILES from diffsay.const and assert "uv.lock" in LOW_PRIORITY_FILES.
+Only edit tests/test_cli.py.`,
+
+	`Add a one-sentence docstring to the module at the top of src/diffsay/const.py
+explaining LOW_PRIORITY_FILES.`,
+
+	`In README.md under ### Develop add this line immediately after the heading (before the code block):
+"Use uv to sync dependencies and run checks."
+Do not skip; README must change even if pytest is mentioned in the code block below.`,
 }
 
 func main() {
