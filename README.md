@@ -1,6 +1,7 @@
 ## Swarm
 
-Go library that clones a git repo, runs [Pi](https://pi.dev/) headless in Docker against it, and returns the unified diff.
+Swarm runs coding agents on real codebases: clone any git repository (public or private), execute [Pi](https://pi.dev/) headless in Docker, and return a unified diff—so you can review, apply, or open a PR from automated tasks.
+
 
 ### Prerequisites
 
@@ -11,8 +12,9 @@ Go library that clones a git repo, runs [Pi](https://pi.dev/) headless in Docker
 Build the Pi image once from this repo:
 
 ```bash
-docker build -t swarm-pi:local .
+docker build -t swarm:v0.1.0 .
 ```
+
 
 ### Install
 
@@ -30,13 +32,12 @@ result, err := swarm.Run(ctx, swarm.RunRequest{
     Prompt:           "Add Gemfile.lock to LOW_PRIORITY_FILES in src/diffsay/const.py",
     PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
     OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
-    DockerImage:      "swarm-pi:local",
+    DockerImage:      "swarm:v0.1.0",
 })
 
 // result.Patch, result.Summary, result.RepoDir, result.OutDir
 ```
 
-Each job uses `{WorkDir}/{ID}/repo` (clone) and `{WorkDir}/{ID}/out` (`patch.diff`, `summary.txt`). Reusing the same `ID` skips re-clone if `repo/.git` already exists.
 
 ### Private repositories
 
