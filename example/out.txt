@@ -1,0 +1,121 @@
+2026/09/25 23:31:58 [task 1] start id=163ef5a6-0e08-4597-964c-4c12fafeed1a
+2026/09/25 23:31:58 [task 4] start id=05cad356-64b0-4c77-881c-17fc14f965c9
+2026/09/25 23:31:58 [task 5] start id=8c80122b-2a33-47c8-9c1c-4ed02efbb035
+2026/09/25 23:31:58 [task 3] start id=1b8cab80-56b9-4fa3-9618-54ee264a6e7f
+2026/09/25 23:31:58 [task 2] start id=79e12558-49ed-4fd5-b61c-17d49fecb1c0
+
+========================================================================
+[task 5] id=8c80122b-2a33-47c8-9c1c-4ed02efbb035
+out: /Users/clivern/space/swarm/example/.work/8c80122b-2a33-47c8-9c1c-4ed02efbb035/out
+========================================================================
+--- summary ---
+Done! I've added the line "Use uv to sync dependencies and run checks." immediately after the `### Develop` heading in README.md, before the code block.
+--- patch ---
+diff --git a/README.md b/README.md
+index 1bdca6e..e396ded 100644
+--- a/README.md
++++ b/README.md
+@@ -51,6 +51,8 @@ Use a 7B+ instruct model. Sub-3B models (Gemma 1B, Qwen 1.5B) tend to invent tok
+
+ ### Develop
+
++Use uv to sync dependencies and run checks.
++
+ ```bash
+ uv sync
+ uv run ruff check src tests
+
+========================================================================
+[task 2] id=79e12558-49ed-4fd5-b61c-17d49fecb1c0
+out: /Users/clivern/space/swarm/example/.work/79e12558-49ed-4fd5-b61c-17d49fecb1c0/out
+========================================================================
+--- summary ---
+Done! I've added "Poetry.lock" to the LOW_PRIORITY_FILES set in `src/diffsay/const.py`. The file now includes both "Poetry.lock" and "poetry.lock" to handle both capitalizations.
+--- patch ---
+diff --git a/src/diffsay/const.py b/src/diffsay/const.py
+index d39ccea..afc5cfe 100644
+--- a/src/diffsay/const.py
++++ b/src/diffsay/const.py
+@@ -13,6 +13,7 @@ LOW_PRIORITY_FILES = {
+     "go.sum",
+     "package-lock.json",
+     "pnpm-lock.yaml",
++    "Poetry.lock",
+     "poetry.lock",
+     "uv.lock",
+     "yarn.lock",
+
+========================================================================
+[task 1] id=163ef5a6-0e08-4597-964c-4c12fafeed1a
+out: /Users/clivern/space/swarm/example/.work/163ef5a6-0e08-4597-964c-4c12fafeed1a/out
+========================================================================
+--- summary ---
+Done! I've added "Gemfile.lock" to the LOW_PRIORITY_FILES set in `src/diffsay/const.py`, placing it alphabetically between "composer.lock" and "go.sum".
+--- patch ---
+diff --git a/src/diffsay/const.py b/src/diffsay/const.py
+index d39ccea..09117ff 100644
+--- a/src/diffsay/const.py
++++ b/src/diffsay/const.py
+@@ -10,6 +10,7 @@ DIFF_FILE_RE = re.compile(r"^diff --git a/.+ b/(.+)$", re.MULTILINE)
+ LOW_PRIORITY_FILES = {
+     "Cargo.lock",
+     "composer.lock",
++    "Gemfile.lock",
+     "go.sum",
+     "package-lock.json",
+     "pnpm-lock.yaml",
+
+========================================================================
+[task 4] id=05cad356-64b0-4c77-881c-17fc14f965c9
+out: /Users/clivern/space/swarm/example/.work/05cad356-64b0-4c77-881c-17fc14f965c9/out
+========================================================================
+--- summary ---
+Done! I've added a one-sentence module docstring at the top of `src/diffsay/const.py` that explains the module's purpose and specifically describes LOW_PRIORITY_FILES as defining dependency lock files to deprioritize in diff summaries.
+--- patch ---
+diff --git a/src/diffsay/const.py b/src/diffsay/const.py
+index d39ccea..229ccad 100644
+--- a/src/diffsay/const.py
++++ b/src/diffsay/const.py
+@@ -1,3 +1,5 @@
++"""Constants for diffsay, including LOW_PRIORITY_FILES which defines dependency lock files to deprioritize in diff summaries."""
++
+ import re
+
+ DEFAULT_MODEL_ORG = "mlx-community"
+
+========================================================================
+[task 3] id=1b8cab80-56b9-4fa3-9618-54ee264a6e7f
+out: /Users/clivern/space/swarm/example/.work/1b8cab80-56b9-4fa3-9618-54ee264a6e7f/out
+========================================================================
+--- summary ---
+Perfect! I've added the new test function to `tests/test_cli.py`. The changes include:
+
+1. **Added import** at the top: `from diffsay.const import LOW_PRIORITY_FILES`
+2. **Added test function**: `test_uv_lock_in_low_priority_files()` that asserts `"uv.lock" in LOW_PRIORITY_FILES`
+
+The test is placed logically in the file, before the message cleaning tests. Would you like me to run the test to verify it passes?
+--- patch ---
+diff --git a/tests/test_cli.py b/tests/test_cli.py
+index 043ec69..ca6c46c 100644
+--- a/tests/test_cli.py
++++ b/tests/test_cli.py
+@@ -4,6 +4,7 @@ from unittest.mock import patch
+ from click.testing import CliRunner
+
+ from diffsay.cli import main
++from diffsay.const import LOW_PRIORITY_FILES
+ from diffsay.diff import Diff
+ from diffsay.spinner import spinner
+
+@@ -32,6 +33,10 @@ def test_resolve_local_path(tmp_path) -> None:
+     assert Diff.resolve_model_id(str(model_dir)) == str(model_dir)
+
+
++def test_uv_lock_in_low_priority_files() -> None:
++    assert "uv.lock" in LOW_PRIORITY_FILES
++
++
+ def test_clean_message_strips_fences_and_end_token() -> None:
+     raw = "```text\nfeat(parser): strip fences\n```\n<|im_end|> leftover"
+     assert Diff.clean_message(raw) == "feat(parser): strip fences"
+all tasks finished
