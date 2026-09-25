@@ -78,7 +78,7 @@ func main() {
 			}
 
 			mu.Lock()
-			printTaskResult(n+1, id, result)
+			PrintTaskResult(n+1, id, result)
 			mu.Unlock()
 		}(i, prompt)
 	}
@@ -90,7 +90,7 @@ func main() {
 	fmt.Println("all tasks finished")
 }
 
-func printTaskResult(n int, id string, result *swarm.Result) {
+func PrintTaskResult(n int, id string, result *swarm.Result) {
 	bar := strings.Repeat("=", 72)
 	fmt.Printf("\n%s\n[task %d] id=%s\nout: %s\n%s\n", bar, n, id, result.OutDir, bar)
 	fmt.Println("--- summary ---")
