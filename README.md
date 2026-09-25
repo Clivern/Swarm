@@ -1,6 +1,6 @@
 ## Swarm
 
-Swarm runs coding agents on real codebases: clone any git repository (public or private), execute [Pi](https://pi.dev/) headless in Docker, and return a unified diff—so you can review, apply, or open a PR from automated tasks.
+Swarm runs coding agents on real codebases: clone any git repository (public or private), execute [Pi](https://pi.dev/) headless in Docker, and return a unified diff - so you can review, apply, or open a PR from automated tasks.
 
 
 ### Prerequisites
