@@ -7,15 +7,15 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
+
+	git "github.com/go-git/go-git/v5"
 )
 
 // WorkspacePaths returns repo and out directories for WorkDir/ID.
 func WorkspacePaths(workDir, id string) (repoDir, outDir string, err error) {
 	base, err := filepath.Abs(workDir)
-
 	if err != nil {
 		return "", "", fmt.Errorf("resolve WorkDir: %w", err)
 	}
@@ -34,37 +34,27 @@ func EnsureClone(ctx context.Context, repoURL, dest string, auth GitCloneAuth) e
 		return nil
 	}
 
-	if err := os.MkdirAll(dest, 0o755); err != nil {
-		return fmt.Errorf("create repo dir: %w", err)
+	repoURL = strings.TrimSpace(repoURL)
+	if repoURL == "" {
+		return fmt.Errorf("repo URL is empty")
 	}
 
-	cloneURL, sshKey, err := prepareCloneURL(repoURL, auth)
+	cloneAuth, err := cloneAuth(repoURL, auth)
 	if err != nil {
 		return err
 	}
 
-	args := []string{"clone", "--depth", "1"}
-	if sshKey != "" {
-		absKey, err := filepath.Abs(sshKey)
-		if err != nil {
-			return fmt.Errorf("resolve SSHPrivateKeyPath: %w", err)
-		}
-		sshCmd := fmt.Sprintf("ssh -i %q -o BatchMode=yes -o StrictHostKeyChecking=accept-new", absKey)
-		args = append([]string{"-c", "core.sshCommand=" + sshCmd}, args...)
+	if err := os.MkdirAll(filepath.Dir(dest), 0o755); err != nil {
+		return fmt.Errorf("create workspace dir: %w", err)
 	}
 
-	args = append(args, cloneURL, dest)
-	cmd := exec.CommandContext(ctx, "git", args...)
-	cmd.Env = append(os.Environ(), "GIT_TERMINAL_PROMPT=0")
-	out, err := cmd.CombinedOutput()
-
+	_, err = git.PlainCloneContext(ctx, dest, false, &git.CloneOptions{
+		URL:   repoURL,
+		Depth: 1,
+		Auth:  cloneAuth,
+	})
 	if err != nil {
-		msg := strings.TrimSpace(string(out))
-		msg = redactCloneSecrets(msg, auth)
-		if len(msg) > 4096 {
-			msg = msg[:4096] + "..."
-		}
-		return fmt.Errorf("git clone: %w: %s", err, msg)
+		return fmt.Errorf("clone: %w", err)
 	}
 
 	return nil

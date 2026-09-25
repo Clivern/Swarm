@@ -11,7 +11,7 @@ type GitCloneAuth struct {
 	// Username for HTTPS basic auth. Empty with Token defaults to x-access-token (GitHub).
 	// GitLab deploy tokens often use gitlab-ci-token; OAuth-style clones may use oauth2.
 	Username string
-	// SSHPrivateKeyPath is passed to git as core.sshCommand for SSH remotes.
+	// SSHPrivateKeyPath is the private key file for git@ or ssh:// remotes.
 	SSHPrivateKeyPath string
 }
 
