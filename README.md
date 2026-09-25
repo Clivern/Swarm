@@ -35,7 +35,7 @@ result, err := swarm.Run(ctx, swarm.RunRequest{
     DockerImage:      "swarm:v0.1.0",
 })
 
-// result.Patch, result.Summary, result.RepoDir, result.OutDir
+// result.Patch, result.ChangedFiles, result.Summary, result.RepoDir, result.OutDir
 ```
 
 

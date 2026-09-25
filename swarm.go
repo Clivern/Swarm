@@ -51,10 +51,16 @@ func Run(ctx context.Context, req RunRequest) (*Result, error) {
 		return nil, fmt.Errorf("read summary.txt: %w", err)
 	}
 
+	changed, err := changedFilesInRepo(repoDir)
+	if err != nil {
+		return nil, fmt.Errorf("list changed files: %w", err)
+	}
+
 	return &Result{
-		Patch:   string(patch),
-		Summary: string(summary),
-		RepoDir: repoDir,
-		OutDir:  outDir,
+		Patch:        string(patch),
+		Summary:      string(summary),
+		ChangedFiles: changed,
+		RepoDir:      repoDir,
+		OutDir:       outDir,
 	}, nil
 }

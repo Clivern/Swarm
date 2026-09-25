@@ -34,12 +34,21 @@ type RunRequest struct {
 	DockerImage string
 }
 
+// ChangedFile describes one path touched by the agent.
+type ChangedFile struct {
+	Path   string
+	Status string // M, A, D, …
+	// Content is the file after the run (worktree). Empty when deleted.
+	Content string
+}
+
 // Result holds artifacts from a successful run.
 type Result struct {
-	Patch   string
-	Summary string
-	RepoDir string
-	OutDir  string
+	Patch        string
+	Summary      string
+	ChangedFiles []ChangedFile
+	RepoDir      string
+	OutDir       string
 }
 
 type dockerParams struct {
