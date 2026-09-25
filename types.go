@@ -48,6 +48,7 @@ type ChangedFile struct {
 type Result struct {
 	Patch        string
 	Summary      string
+	TotalTokens  int
 	ChangedFiles []ChangedFile
 	RepoDir      string
 	OutDir       string

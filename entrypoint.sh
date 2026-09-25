@@ -24,13 +24,12 @@ cd /repo
 BASE="$(git rev-parse HEAD)"
 
 echo "Running Pi (model=${PI_MODEL}) in /repo ..." >&2
-pi -p --model "$PI_MODEL" --no-session "$PROMPT" | tee /tmp/pi-summary.txt
+pi -p --model "$PI_MODEL" --no-session --mode json "$PROMPT" > /out/pi.jsonl
 
 DIFF="$(git diff "$BASE")"
 if [[ -d /out ]]; then
   printf '%s' "$DIFF" > /out/patch.diff
-  cp /tmp/pi-summary.txt /out/summary.txt
-  echo "Wrote /out/patch.diff and /out/summary.txt" >&2
+  echo "Wrote /out/patch.diff and /out/pi.jsonl" >&2
 else
   echo "--- patch.diff ---" >&2
   printf '%s' "$DIFF"

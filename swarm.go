@@ -46,9 +46,9 @@ func Run(ctx context.Context, req RunRequest) (*Result, error) {
 		return nil, fmt.Errorf("read patch.diff: %w", err)
 	}
 
-	summary, err := os.ReadFile(filepath.Join(outDir, "summary.txt"))
+	summary, totalTokens, err := readOut(outDir)
 	if err != nil {
-		return nil, fmt.Errorf("read summary.txt: %w", err)
+		return nil, err
 	}
 
 	changed, err := changedFilesInRepo(repoDir)
@@ -58,7 +58,8 @@ func Run(ctx context.Context, req RunRequest) (*Result, error) {
 
 	result := &Result{
 		Patch:        string(patch),
-		Summary:      string(summary),
+		Summary:      summary,
+		TotalTokens:  totalTokens,
 		ChangedFiles: changed,
 		RepoDir:      repoDir,
 		OutDir:       outDir,

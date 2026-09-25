@@ -4,7 +4,7 @@
 // Five concurrent agent runs against github.com/Clivern/Diffsay.
 //
 // Prerequisites:
-//   - docker build -t swarm:v0.6.0 ..   (from repo root)
+//   - docker build -t swarm:v0.7.0 ..   (from repo root)
 //   - export OPENROUTER_API_KEY=sk-or-...
 //
 // Run:
@@ -118,7 +118,7 @@ func main() {
 				Prompt:           prompt,
 				PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
 				OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
-				DockerImage:      "swarm:v0.6.0",
+				DockerImage:      "swarm:v0.7.0",
 				Cleanup:          true,
 			})
 
@@ -158,6 +158,9 @@ func PrintTaskResult(n int, id string, result *swarm.Result) {
 	fmt.Printf("\n%s\n[task %d] id=%s\nout: %s\n%s\n", bar, n, id, result.OutDir, bar)
 	fmt.Println("--- summary ---")
 	fmt.Println(strings.TrimSpace(result.Summary))
+	if result.TotalTokens > 0 {
+		fmt.Printf("total_tokens=%d\n", result.TotalTokens)
+	}
 	fmt.Println("--- changed files ---")
 	if len(result.ChangedFiles) == 0 {
 		fmt.Println("(none)")
