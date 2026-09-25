@@ -15,12 +15,13 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"os"
+	"sort"
 	"strings"
 	"sync"
 	"time"
 
+	"github.com/briandowns/spinner"
 	"github.com/clivern/swarm"
 	"github.com/google/uuid"
 )
@@ -44,13 +45,63 @@ explaining LOW_PRIORITY_FILES.`,
 Do not skip; README must change even if pytest is mentioned in the code block below.`,
 }
 
+type TaskOutcome struct {
+	n      int
+	id     string
+	result *swarm.Result
+	err    error
+}
+
+type Progress struct {
+	mu       sync.Mutex
+	inFlight int
+	ok       int
+	failed   int
+	spinner  *spinner.Spinner
+}
+
+func (p *Progress) StartTask() {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	p.inFlight++
+	p.RefreshLocked()
+}
+
+func (p *Progress) FinishTask(ok bool) {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	p.inFlight--
+	if ok {
+		p.ok++
+	} else {
+		p.failed++
+	}
+	p.RefreshLocked()
+}
+
+func (p *Progress) RefreshLocked() {
+	if p.spinner == nil {
+		return
+	}
+	pending := len(tasks) - p.inFlight - p.ok - p.failed
+	p.spinner.Suffix = fmt.Sprintf(
+		" %d running · %d done · %d failed · %d pending",
+		p.inFlight, p.ok, p.failed, pending,
+	)
+}
+
 func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Hour)
 	defer cancel()
 
+	s := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
+	s.Suffix = " starting..."
+	s.Start()
+
+	prog := &Progress{spinner: s}
 	var wg sync.WaitGroup
 	var mu sync.Mutex
-	var failed int
+	outcomes := make([]TaskOutcome, 0, len(tasks))
 
 	for i, prompt := range tasks {
 		wg.Add(1)
@@ -58,7 +109,7 @@ func main() {
 			defer wg.Done()
 
 			id := uuid.NewString()
-			log.Printf("[task %d] start id=%s", n+1, id)
+			prog.StartTask()
 
 			result, err := swarm.Run(ctx, swarm.RunRequest{
 				WorkDir:          ".work",
@@ -69,23 +120,34 @@ func main() {
 				OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
 				DockerImage:      "swarm:v0.1.0",
 			})
-			if err != nil {
-				mu.Lock()
-				failed++
-				mu.Unlock()
-				log.Printf("[task %d] error id=%s: %v", n+1, id, err)
-				return
-			}
 
 			mu.Lock()
-			PrintTaskResult(n+1, id, result)
+			outcomes = append(outcomes, TaskOutcome{n: n + 1, id: id, result: result, err: err})
 			mu.Unlock()
+
+			prog.FinishTask(err == nil)
 		}(i, prompt)
 	}
 
 	wg.Wait()
+	s.Stop()
+	fmt.Println()
+
+	sort.Slice(outcomes, func(i, j int) bool { return outcomes[i].n < outcomes[j].n })
+
+	var failed int
+	for _, o := range outcomes {
+		if o.err != nil {
+			failed++
+			fmt.Printf("[task %d] id=%s error: %v\n", o.n, o.id, o.err)
+			continue
+		}
+		PrintTaskResult(o.n, o.id, o.result)
+	}
+
 	if failed > 0 {
-		log.Fatalf("%d of %d tasks failed", failed, len(tasks))
+		fmt.Printf("\n%d of %d tasks failed\n", failed, len(tasks))
+		os.Exit(1)
 	}
 	fmt.Println("all tasks finished")
 }
