@@ -27,6 +27,19 @@ func WorkspacePaths(workDir, id string) (repoDir, outDir string, err error) {
 	return repoDir, outDir, nil
 }
 
+// RemoveJobDir deletes WorkDir/ID (repo and out). Other IDs under WorkDir are untouched.
+func RemoveJobDir(workDir, id string) error {
+	repoDir, _, err := WorkspacePaths(workDir, id)
+	if err != nil {
+		return err
+	}
+	jobDir := filepath.Dir(repoDir)
+	if err := os.RemoveAll(jobDir); err != nil {
+		return fmt.Errorf("remove job dir: %w", err)
+	}
+	return nil
+}
+
 // EnsureClone clones repoURL into dest when dest is not already a git repository.
 func EnsureClone(ctx context.Context, repoURL, dest string, auth GitCloneAuth) error {
 	gitDir := filepath.Join(dest, ".git")

@@ -4,7 +4,7 @@
 // Five concurrent agent runs against github.com/Clivern/Diffsay.
 //
 // Prerequisites:
-//   - docker build -t swarm:v0.5.0 ..   (from repo root)
+//   - docker build -t swarm:v0.6.0 ..   (from repo root)
 //   - export OPENROUTER_API_KEY=sk-or-...
 //
 // Run:
@@ -118,7 +118,8 @@ func main() {
 				Prompt:           prompt,
 				PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
 				OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
-				DockerImage:      "swarm:v0.5.0",
+				DockerImage:      "swarm:v0.6.0",
+				Cleanup:          true,
 			})
 
 			mu.Lock()

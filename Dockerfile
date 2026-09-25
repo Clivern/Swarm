@@ -3,7 +3,7 @@
 #
 # Headless Pi on a mounted git repo.
 #
-#   docker build -t swarm:v0.5.0 .
+#   docker build -t swarm:v0.6.0 .
 #
 #   docker run --rm \
 #     -e OPENROUTER_API_KEY \
@@ -11,7 +11,7 @@
 #     -e PI_MODEL=openrouter/anthropic/claude-sonnet-4.5 \
 #     -v /path/to/git-clone:/repo \
 #     -v /path/to/output:/out \
-#     swarm:v0.5.0
+#     swarm:v0.6.0
 FROM node:24-bookworm-slim
 
 RUN apt-get update \

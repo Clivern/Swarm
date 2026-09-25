@@ -32,6 +32,8 @@ type RunRequest struct {
 
 	// DockerImage is the Pi image tag (e.g. swarm-pi:local).
 	DockerImage string
+	// Cleanup deletes WorkDir/ID (repo and out) after a successful run.
+	Cleanup bool
 }
 
 // ChangedFile describes one path touched by the agent.

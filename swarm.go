@@ -56,11 +56,19 @@ func Run(ctx context.Context, req RunRequest) (*Result, error) {
 		return nil, fmt.Errorf("list changed files: %w", err)
 	}
 
-	return &Result{
+	result := &Result{
 		Patch:        string(patch),
 		Summary:      string(summary),
 		ChangedFiles: changed,
 		RepoDir:      repoDir,
 		OutDir:       outDir,
-	}, nil
+	}
+
+	if req.Cleanup {
+		if err := RemoveJobDir(req.WorkDir, req.ID); err != nil {
+			return nil, err
+		}
+	}
+
+	return result, nil
 }
