@@ -11,7 +11,7 @@ import (
 
 func validRunRequest() RunRequest {
 	return RunRequest{
-		WorkDir:          ".work",
+		WorkDir:          "/tmp/basement",
 		ID:               "job-1",
 		RepoURL:          "https://github.com/example/repo.git",
 		Prompt:           "do something",

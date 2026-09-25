@@ -12,27 +12,27 @@ Swarm runs coding agents on real codebases: clone any git repository (public or 
 Build the Pi image once from this repo:
 
 ```bash
-docker build -t swarm:v0.7.0 .
+docker build -t swarm:v0.8.0 .
 ```
 
 
 ### Install
 
 ```bash
-go get github.com/clivern/swarm@v0.7.0
+go get github.com/clivern/swarm@v0.8.0
 ```
 
 ### Usage
 
 ```go
 result, err := swarm.Run(ctx, swarm.RunRequest{
-    WorkDir:          ".work",
+    WorkDir:          "/tmp/basement",
     ID:               "550e8400-e29b-41d4-a716-446655440000",
     RepoURL:          "https://github.com/Clivern/Diffsay.git",
     Prompt:           "Add Gemfile.lock to LOW_PRIORITY_FILES",
     PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
     OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
-    DockerImage:      "swarm:v0.7.0",
+    DockerImage:      "swarm:v0.8.0",
     Cleanup: true,
 })
 

@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/briandowns/spinner v1.23.2
-	github.com/clivern/swarm v0.6.0
+	github.com/clivern/swarm v0.8.0
 	github.com/google/uuid v1.6.0
 )
 

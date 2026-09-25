@@ -1,13 +1,6 @@
 # Secrets
 .env
 
-# Local Pi / clone workspaces (WorkDir from swarm.Run)
-.work/
-example/.work/
-
-# Ad-hoc clone or docker output on the host
-out/
-
 # Go
 /swarm
 *.exe

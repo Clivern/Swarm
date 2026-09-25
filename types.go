@@ -17,7 +17,7 @@ type GitCloneAuth struct {
 
 // RunRequest configures a Pi Docker run against a cloned repository.
 type RunRequest struct {
-	// WorkDir is the parent directory; each job uses WorkDir/ID/.
+	// WorkDir is the parent directory (e.g. /tmp/basement); each job uses WorkDir/ID/.
 	WorkDir string
 	// ID uniquely names the workspace (e.g. a UUID).
 	ID string
