@@ -12,14 +12,14 @@ Swarm runs coding agents on real codebases: clone any git repository (public or 
 Build the Pi image once from this repo:
 
 ```bash
-docker build -t swarm:v0.4.0 .
+docker build -t swarm:v0.5.0 .
 ```
 
 
 ### Install
 
 ```bash
-go get github.com/clivern/swarm@v0.4.0
+go get github.com/clivern/swarm@v0.5.0
 ```
 
 ### Usage
@@ -32,7 +32,7 @@ result, err := swarm.Run(ctx, swarm.RunRequest{
     Prompt:           "Add Gemfile.lock to LOW_PRIORITY_FILES",
     PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
     OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
-    DockerImage:      "swarm:v0.4.0",
+    DockerImage:      "swarm:v0.5.0",
 })
 
 // result.Patch, result.ChangedFiles, result.Summary, result.RepoDir, result.OutDir
