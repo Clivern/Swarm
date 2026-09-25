@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Copyright 2026 Swarm. All rights reserved.
+# License can be found in the LICENSE file.
 set -euo pipefail
 
 if [[ -z "${OPENROUTER_API_KEY:-}" ]]; then

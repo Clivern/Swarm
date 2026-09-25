@@ -1,3 +1,6 @@
+# Copyright 2026 Swarm. All rights reserved.
+# License can be found in the LICENSE file.
+#
 # Headless Pi on a mounted git repo.
 #
 #   docker build -t swarm-pi:0.1.0 .

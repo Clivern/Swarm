@@ -1,3 +1,6 @@
+// Copyright 2026 Swarm. All rights reserved.
+// License can be found in the LICENSE file.
+
 package swarm
 
 import (
