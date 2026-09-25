@@ -4,7 +4,7 @@
 // Five concurrent agent runs against github.com/Clivern/Diffsay.
 //
 // Prerequisites:
-//   - docker build -t swarm-pi:local ..   (from repo root)
+//   - docker build -t swarm:v0.4.0 ..   (from repo root)
 //   - export OPENROUTER_API_KEY=sk-or-...
 //
 // Run:
@@ -163,6 +163,12 @@ func PrintTaskResult(n int, id string, result *swarm.Result) {
 	} else {
 		for _, f := range result.ChangedFiles {
 			fmt.Printf("%s\t%s (%d bytes)\n", f.Status, f.Path, len(f.Content))
+			if strings.TrimSpace(f.Content) == "" {
+				fmt.Println("(no content)")
+			} else {
+				fmt.Println(f.Content)
+			}
+			fmt.Println()
 		}
 	}
 	fmt.Println("--- patch ---")

@@ -5,21 +5,21 @@ Swarm runs coding agents on real codebases: clone any git repository (public or 
 
 ### Prerequisites
 
-- Go 1.25+
-- Docker (running)
-- [OpenRouter](https://openrouter.ai/) API key
+- Go 1.25+.
+- Docker.
+- LLM Provider.
 
 Build the Pi image once from this repo:
 
 ```bash
-docker build -t swarm:v0.1.0 .
+docker build -t swarm:v0.4.0 .
 ```
 
 
 ### Install
 
 ```bash
-go get github.com/clivern/swarm
+go get github.com/clivern/swarm@v0.4.0
 ```
 
 ### Usage
@@ -32,7 +32,7 @@ result, err := swarm.Run(ctx, swarm.RunRequest{
     Prompt:           "Add Gemfile.lock to LOW_PRIORITY_FILES",
     PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
     OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
-    DockerImage:      "swarm:v0.1.0",
+    DockerImage:      "swarm:v0.4.0",
 })
 
 // result.Patch, result.ChangedFiles, result.Summary, result.RepoDir, result.OutDir
