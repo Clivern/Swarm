@@ -1,0 +1,22 @@
+# Secrets
+.env
+
+# Local Pi / clone workspaces (WorkDir from swarm.Run)
+.work/
+
+# Ad-hoc clone or docker output on the host
+out/
+
+# Go
+/swarm
+*.exe
+*.test
+coverage.out
+vendor/
+go.work
+go.work.sum
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
