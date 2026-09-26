@@ -10,20 +10,20 @@ Swarm runs coding agents on real codebases: clone any git repository (public or 
 - LLM Provider.
 
 ```bash
-docker pull clivern/swarm:v0.8.0
+docker pull clivern/swarm:v0.8.1
 ```
 
 Or build locally:
 
 ```bash
-docker build -t clivern/swarm:v0.8.0 .
+docker build -t clivern/swarm:v0.8.1 .
 ```
 
 
 ### Install
 
 ```bash
-go get github.com/clivern/swarm@v0.8.0
+go get github.com/clivern/swarm@v0.8.1
 ```
 
 ### Usage
@@ -36,7 +36,7 @@ result, err := swarm.Run(ctx, swarm.RunRequest{
     Prompt:           "Add Gemfile.lock to LOW_PRIORITY_FILES",
     PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
     OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
-    DockerImage:      "clivern/swarm:v0.8.0",
+    DockerImage:      "clivern/swarm:v0.8.1",
     Cleanup: true,
 })
 
