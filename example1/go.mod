@@ -1,4 +1,4 @@
-module github.com/clivern/swarm/example
+module github.com/clivern/swarm/example1
 
 go 1.26.0
 

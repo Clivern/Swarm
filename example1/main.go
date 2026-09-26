@@ -158,9 +158,7 @@ func PrintTaskResult(n int, id string, result *swarm.Result) {
 	fmt.Printf("\n%s\n[task %d] id=%s\nout: %s\n%s\n", bar, n, id, result.OutDir, bar)
 	fmt.Println("--- summary ---")
 	fmt.Println(strings.TrimSpace(result.Summary))
-	if result.TotalTokens > 0 {
-		fmt.Printf("total_tokens=%d\n", result.TotalTokens)
-	}
+	fmt.Printf("total_tokens=%d\n", result.TotalTokens)
 	fmt.Println("--- changed files ---")
 	if len(result.ChangedFiles) == 0 {
 		fmt.Println("(none)")
