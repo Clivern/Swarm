@@ -9,26 +9,19 @@ import (
 )
 
 func (req RunRequest) validate() error {
-	if strings.TrimSpace(req.RepoURL) == "" {
-		return fmt.Errorf("Repository URL is required")
+	required := []struct{ name, value string }{
+		{"Repository URL", req.RepoURL},
+		{"Prompt", req.Prompt},
+		{"PI Model", req.PIModel},
+		{"OpenRouterAPIKey", req.OpenRouterAPIKey},
+		{"Docker Image", req.DockerImage},
+		{"Container.Memory", req.Container.Memory},
+		{"Container.CPUs", req.Container.CPUs},
 	}
-	if strings.TrimSpace(req.Prompt) == "" {
-		return fmt.Errorf("Prompt is required")
-	}
-	if strings.TrimSpace(req.PIModel) == "" {
-		return fmt.Errorf("PI Model is required")
-	}
-	if strings.TrimSpace(req.OpenRouterAPIKey) == "" {
-		return fmt.Errorf("OpenRouterAPIKey is required")
-	}
-	if strings.TrimSpace(req.DockerImage) == "" {
-		return fmt.Errorf("Docker Image is required")
-	}
-	if strings.TrimSpace(req.Container.Memory) == "" {
-		return fmt.Errorf("Container.Memory is required")
-	}
-	if strings.TrimSpace(req.Container.CPUs) == "" {
-		return fmt.Errorf("Container.CPUs is required")
+	for _, f := range required {
+		if strings.TrimSpace(f.value) == "" {
+			return fmt.Errorf("%s is required", f.name)
+		}
 	}
 	return nil
 }

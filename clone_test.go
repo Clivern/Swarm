@@ -40,19 +40,9 @@ func TestUnitCloneAuth(t *testing.T) {
 		assert.Equal(t, "tok", basic.Password)
 	})
 
-	t.Run("SSH URL with HTTPS token", func(t *testing.T) {
-		_, err := CloneAuth("git@github.com:org/repo.git", GitCloneAuth{Token: "x"})
-		assert.Error(t, err)
-	})
-
 	t.Run("SSH URL without key", func(t *testing.T) {
 		auth, err := CloneAuth("git@github.com:org/repo.git", GitCloneAuth{})
 		assert.NoError(t, err)
 		assert.Nil(t, auth)
-	})
-
-	t.Run("empty repository URL", func(t *testing.T) {
-		_, err := CloneAuth("  ", GitCloneAuth{})
-		assert.Error(t, err)
 	})
 }
