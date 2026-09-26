@@ -14,25 +14,26 @@ import (
 )
 
 func RunDocker(ctx context.Context, p DockerParams) error {
-	repo, err := filepath.Abs(p.repoDir)
+	repo, err := filepath.Abs(p.RepoDir)
 	if err != nil {
 		return fmt.Errorf("resolve repo mount: %w", err)
 	}
 
-	out, err := filepath.Abs(p.outDir)
+	out, err := filepath.Abs(p.OutDir)
 	if err != nil {
 		return fmt.Errorf("resolve out mount: %w", err)
 	}
 
-	c := p.container
+	c := p.Container
 	env := []string{
-		fmt.Sprintf("OPENROUTER_API_KEY=%s", p.openRouterAPIKey),
-		fmt.Sprintf("PROMPT=%s", p.prompt),
-		fmt.Sprintf("PI_MODEL=%s", p.piModel),
+		fmt.Sprintf("PROXY_KEY=%s", p.ProxyKey),
+		fmt.Sprintf("PROXY_URL=%s", p.ProxyURL),
+		fmt.Sprintf("PROMPT=%s", p.Prompt),
+		fmt.Sprintf("PI_MODEL=%s", p.PIModel),
 	}
 
-	if p.initScript != "" {
-		env = append(env, fmt.Sprintf("INIT_SCRIPT=%s", p.initScript))
+	if p.InitScript != "" {
+		env = append(env, fmt.Sprintf("INIT_SCRIPT=%s", p.InitScript))
 	}
 
 	args := []string{
@@ -48,7 +49,7 @@ func RunDocker(ctx context.Context, p DockerParams) error {
 	args = append(args,
 		"-v", fmt.Sprintf("%s:/repo", repo),
 		"-v", fmt.Sprintf("%s:/out", out),
-		p.image,
+		p.Image,
 	)
 
 	cmd := exec.CommandContext(ctx, "docker", args...)

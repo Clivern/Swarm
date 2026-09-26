@@ -25,7 +25,8 @@ result, err := swarm.Run(ctx, swarm.RunRequest{
     RepoURL:           "https://github.com/Clivern/Diffsay.git",
     Prompt:            "Add Gemfile.lock to LOW_PRIORITY_FILES",
     PIModel:           "openrouter/anthropic/claude-sonnet-4.5",
-    OpenRouterAPIKey:  os.Getenv("OPENROUTER_API_KEY"),
+    ProxyKey:          os.Getenv("PROXY_KEY"),
+    ProxyURL:          "http://host.docker.internal:8080/api",
     DockerImage:       "clivern/swarm:v0.8.3",
     Container: swarm.Container{
         Memory: "2g",

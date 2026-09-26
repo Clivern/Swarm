@@ -4,7 +4,7 @@
 // Five concurrent agent runs against github.com/Clivern/Diffsay.
 //
 // Prerequisites:
-//   - export OPENROUTER_API_KEY=sk-or-...
+//   - export PROXY_KEY=sk-or-...
 //
 // Run:
 //
@@ -111,13 +111,14 @@ func main() {
 			prog.StartTask()
 
 			result, err := swarm.Run(ctx, swarm.RunRequest{
-				WorkDir:          "/tmp/basement",
-				ID:               id,
-				RepoURL:          "https://github.com/Clivern/Diffsay.git",
-				Prompt:           prompt,
-				PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
-				OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
-				DockerImage:      "clivern/swarm:v0.8.3",
+				WorkDir:     "/tmp/basement",
+				ID:          id,
+				RepoURL:     "https://github.com/Clivern/Diffsay.git",
+				Prompt:      prompt,
+				PIModel:     "openrouter/anthropic/claude-sonnet-4.5",
+				ProxyKey:    os.Getenv("PROXY_KEY"),
+				ProxyURL:    "http://host.docker.internal:8080/api",
+				DockerImage: "clivern/swarm:v0.8.3",
 				Container: swarm.Container{
 					Memory: "2g",
 					CPUs:   "1",

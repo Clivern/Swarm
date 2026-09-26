@@ -3,8 +3,12 @@
 # License can be found in the LICENSE file.
 set -euo pipefail
 
-if [[ -z "${OPENROUTER_API_KEY:-}" ]]; then
-  echo "OPENROUTER_API_KEY is required" >&2
+if [[ -z "${PROXY_KEY:-}" ]]; then
+  echo "PROXY_KEY is required" >&2
+  exit 1
+fi
+if [[ -z "${PROXY_URL:-}" ]]; then
+  echo "PROXY_URL is required" >&2
   exit 1
 fi
 if [[ -z "${PROMPT:-}" ]]; then
@@ -31,6 +35,9 @@ fi
 if [[ -f /out/init.sh ]]; then
   bash /out/init.sh
 fi
+
+mkdir -p "${HOME}/.pi/agent"
+echo "{\"providers\":{\"openrouter\":{\"baseUrl\":\"${PROXY_URL}\",\"apiKey\":\"\$PROXY_KEY\"}}}" > "${HOME}/.pi/agent/models.json"
 
 cd /repo
 BASE="$(git rev-parse HEAD)"

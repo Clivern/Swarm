@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // Run clones the repo if needed, runs the Pi container, and returns the patch.
@@ -35,14 +36,15 @@ func Run(ctx context.Context, req RunRequest) (*Result, error) {
 	}
 
 	if err := RunDocker(ctx, DockerParams{
-		image:            req.DockerImage,
-		openRouterAPIKey: req.OpenRouterAPIKey,
-		prompt:           req.Prompt,
-		piModel:          req.PIModel,
-		repoDir:          repoDir,
-		outDir:           outDir,
-		container:        req.Container,
-		initScript:       initScript,
+		Image:      req.DockerImage,
+		ProxyKey:   req.ProxyKey,
+		ProxyURL:   strings.TrimSpace(req.ProxyURL),
+		Prompt:     req.Prompt,
+		PIModel:    req.PIModel,
+		RepoDir:    repoDir,
+		OutDir:     outDir,
+		Container:  req.Container,
+		InitScript: initScript,
 	}); err != nil {
 		return nil, err
 	}

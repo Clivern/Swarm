@@ -12,16 +12,19 @@ type GitCloneAuth struct {
 
 // RunRequest configures a Pi Docker run against a cloned repository.
 type RunRequest struct {
-	WorkDir          string
-	ID               string
-	RepoURL          string
-	GitCloneAuth     GitCloneAuth
-	Prompt           string
-	PIModel          string
-	OpenRouterAPIKey string
-	DockerImage      string
-	Container        Container
-	Cleanup          bool
+	WorkDir      string
+	ID           string
+	RepoURL      string
+	GitCloneAuth GitCloneAuth
+	Prompt       string
+	PIModel      string
+	ProxyKey     string
+	// ProxyURL is Pi's OpenRouter base URL.
+	// Example: http://host.docker.internal:8080/api
+	ProxyURL    string
+	DockerImage string
+	Container   Container
+	Cleanup     bool
 }
 
 // Container configures init and docker run limits.
@@ -50,12 +53,13 @@ type Result struct {
 }
 
 type DockerParams struct {
-	image            string
-	openRouterAPIKey string
-	prompt           string
-	piModel          string
-	repoDir          string
-	outDir           string
-	container        Container
-	initScript       string
+	Image      string
+	ProxyKey   string
+	ProxyURL   string
+	Prompt     string
+	PIModel    string
+	RepoDir    string
+	OutDir     string
+	Container  Container
+	InitScript string
 }

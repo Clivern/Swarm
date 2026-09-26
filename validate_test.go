@@ -11,13 +11,14 @@ import (
 
 func validRunRequest() RunRequest {
 	return RunRequest{
-		WorkDir:          "/tmp/basement",
-		ID:               "job-1",
-		RepoURL:          "https://github.com/example/repo.git",
-		Prompt:           "do something",
-		PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
-		OpenRouterAPIKey: "sk-or-test",
-		DockerImage:      "swarm-pi:local",
+		WorkDir:     "/tmp/basement",
+		ID:          "job-1",
+		RepoURL:     "https://github.com/example/repo.git",
+		Prompt:      "do something",
+		PIModel:     "openrouter/anthropic/claude-sonnet-4.5",
+		ProxyKey:    "sk-or-test",
+		ProxyURL:    "https://openrouter.ai/api/v1",
+		DockerImage: "swarm-pi:local",
 		Container: Container{
 			Memory: "2g",
 			CPUs:   "1",
@@ -54,12 +55,20 @@ func TestUnitRunRequestValidate(t *testing.T) {
 		assert.ErrorContains(t, err, "PI Model is required")
 	})
 
-	t.Run("missing OpenRouter API key", func(t *testing.T) {
+	t.Run("missing proxy key", func(t *testing.T) {
 		req := validRunRequest()
-		req.OpenRouterAPIKey = ""
+		req.ProxyKey = ""
 		err := req.validate()
 		assert.Error(t, err)
-		assert.ErrorContains(t, err, "OpenRouterAPIKey is required")
+		assert.ErrorContains(t, err, "ProxyKey is required")
+	})
+
+	t.Run("missing proxy URL", func(t *testing.T) {
+		req := validRunRequest()
+		req.ProxyURL = "  "
+		err := req.validate()
+		assert.Error(t, err)
+		assert.ErrorContains(t, err, "ProxyURL is required")
 	})
 
 	t.Run("missing Docker image", func(t *testing.T) {
