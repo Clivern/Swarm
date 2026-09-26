@@ -9,16 +9,6 @@ Swarm runs coding agents on real codebases: clone any git repository (public or 
 - Docker.
 - LLM Provider.
 
-```bash
-docker pull clivern/swarm:v0.8.1
-```
-
-Or build locally:
-
-```bash
-docker build -t clivern/swarm:v0.8.1 .
-```
-
 
 ### Install
 

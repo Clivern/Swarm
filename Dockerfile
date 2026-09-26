@@ -1,17 +1,7 @@
 # Copyright 2026 Swarm. All rights reserved.
 # License can be found in the LICENSE file.
 #
-# Headless Pi on a mounted git repo.
-#
-#   docker build -t swarm:v0.8.1 .
-#
-#   docker run --rm \
-#     -e OPENROUTER_API_KEY \
-#     -e PROMPT='your task' \
-#     -e PI_MODEL=openrouter/anthropic/claude-sonnet-4.5 \
-#     -v /path/to/git-clone:/repo \
-#     -v /path/to/output:/out \
-#     swarm:v0.8.1
+# Headless Pi on a mounted git repo (published as clivern/swarm on Docker Hub).
 FROM node:24-bookworm-slim
 
 RUN apt-get update \

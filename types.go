@@ -30,7 +30,7 @@ type RunRequest struct {
 	PIModel          string
 	OpenRouterAPIKey string
 
-	// DockerImage is the Pi image tag (e.g. swarm-pi:local).
+	// DockerImage is the Pi image (e.g. clivern/swarm:v0.8.1).
 	DockerImage string
 	// Cleanup deletes WorkDir/ID (repo and out) after a successful run.
 	Cleanup bool

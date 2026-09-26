@@ -4,7 +4,6 @@
 // Read-only codebase question against github.com/Clivern/Ziee (PR triage audit).
 //
 // Prerequisites:
-//   - docker build -t swarm:v0.8.1 ..   (from repo root)
 //   - export OPENROUTER_API_KEY=sk-or-...
 //
 // Run:
@@ -41,7 +40,7 @@ func main() {
 		Prompt:           prompt,
 		PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
 		OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
-		DockerImage:      "swarm:v0.8.1",
+		DockerImage:      "clivern/swarm:v0.8.1",
 		Cleanup:          true,
 	})
 	if err != nil {
