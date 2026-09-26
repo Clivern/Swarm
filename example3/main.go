@@ -6,7 +6,7 @@
 //
 // Prerequisites:
 //   - export OPENROUTER_API_KEY=sk-or-...
-//   - swarm:v0.8.3
+//   - clivern/swarm:v0.8.2
 //
 // Run:
 //

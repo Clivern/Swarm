@@ -13,7 +13,7 @@ Swarm runs coding agents on real codebases: clone any git repository (public or 
 ### Install
 
 ```bash
-go get github.com/clivern/swarm@v0.8.1
+go get github.com/clivern/swarm@v0.8.2
 ```
 
 ### Usage
