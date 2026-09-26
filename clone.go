@@ -15,7 +15,7 @@ import (
 	"golang.org/x/crypto/ssh"
 )
 
-func cloneAuth(repoURL string, auth GitCloneAuth) (transport.AuthMethod, error) {
+func CloneAuth(repoURL string, auth GitCloneAuth) (transport.AuthMethod, error) {
 	repoURL = strings.TrimSpace(repoURL)
 	if repoURL == "" {
 		return nil, fmt.Errorf("repo URL is empty")

@@ -18,6 +18,10 @@ func validRunRequest() RunRequest {
 		PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
 		OpenRouterAPIKey: "sk-or-test",
 		DockerImage:      "swarm-pi:local",
+		Container: Container{
+			Memory: "2g",
+			CPUs:   "1",
+		},
 	}
 }
 

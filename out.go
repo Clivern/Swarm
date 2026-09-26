@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-func readOut(outDir string) (summary string, totalTokens int, err error) {
+func ReadOut(outDir string) (summary string, totalTokens int, err error) {
 	f, err := os.Open(filepath.Join(outDir, "pi.jsonl"))
 	if err != nil {
 		return "", 0, fmt.Errorf("read pi.jsonl: %w", err)
@@ -47,7 +47,7 @@ func readOut(outDir string) (summary string, totalTokens int, err error) {
 			if json.Unmarshal(line, &ev) != nil {
 				continue
 			}
-			if text := assistantText(ev.Message); text != "" {
+			if text := AssistantText(ev.Message); text != "" {
 				if assistant.Len() > 0 {
 					assistant.WriteString("\n\n")
 				}
@@ -61,7 +61,7 @@ func readOut(outDir string) (summary string, totalTokens int, err error) {
 	return strings.TrimSpace(assistant.String()), totalTokens, nil
 }
 
-func assistantText(raw json.RawMessage) string {
+func AssistantText(raw json.RawMessage) string {
 	if len(raw) == 0 {
 		return ""
 	}

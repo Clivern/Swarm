@@ -20,23 +20,37 @@ func Run(ctx context.Context, req RunRequest) (*Result, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	if err := os.MkdirAll(filepath.Dir(repoDir), 0o755); err != nil {
 		return nil, fmt.Errorf("create workspace parent: %w", err)
 	}
+
 	if err := os.MkdirAll(outDir, 0o755); err != nil {
 		return nil, fmt.Errorf("create out dir: %w", err)
 	}
+
 	if err := EnsureClone(ctx, req.RepoURL, repoDir, req.GitCloneAuth); err != nil {
 		return nil, err
 	}
 
-	if err := runDocker(ctx, dockerParams{
+	initScript, err := ResolveRepoInitScript(repoDir, req.Container.InitScript)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := WriteInitBash(outDir, req.Container.InitBash); err != nil {
+		return nil, fmt.Errorf("write inline init: %w", err)
+	}
+
+	if err := RunDocker(ctx, DockerParams{
 		image:            req.DockerImage,
 		openRouterAPIKey: req.OpenRouterAPIKey,
 		prompt:           req.Prompt,
 		piModel:          req.PIModel,
 		repoDir:          repoDir,
 		outDir:           outDir,
+		container:        req.Container,
+		initScript:       initScript,
 	}); err != nil {
 		return nil, err
 	}
@@ -46,12 +60,12 @@ func Run(ctx context.Context, req RunRequest) (*Result, error) {
 		return nil, fmt.Errorf("read patch.diff: %w", err)
 	}
 
-	summary, totalTokens, err := readOut(outDir)
+	summary, totalTokens, err := ReadOut(outDir)
 	if err != nil {
 		return nil, err
 	}
 
-	changed, err := changedFilesInRepo(repoDir)
+	changed, err := ChangedFilesInRepo(repoDir)
 	if err != nil {
 		return nil, fmt.Errorf("list changed files: %w", err)
 	}

@@ -24,5 +24,11 @@ func (req RunRequest) validate() error {
 	if strings.TrimSpace(req.DockerImage) == "" {
 		return fmt.Errorf("Docker Image is required")
 	}
+	if strings.TrimSpace(req.Container.Memory) == "" {
+		return fmt.Errorf("Container.Memory is required")
+	}
+	if strings.TrimSpace(req.Container.CPUs) == "" {
+		return fmt.Errorf("Container.CPUs is required")
+	}
 	return nil
 }

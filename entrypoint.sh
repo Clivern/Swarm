@@ -20,6 +20,18 @@ if [[ ! -d /repo/.git ]]; then
   exit 1
 fi
 
+if [[ -n "${INIT_SCRIPT:-}" ]]; then
+  repo_script="/repo/${INIT_SCRIPT}"
+  if [[ ! -f "$repo_script" ]]; then
+    echo "INIT_SCRIPT not found: $repo_script" >&2
+    exit 1
+  fi
+  bash "$repo_script"
+fi
+if [[ -f /out/init.sh ]]; then
+  bash /out/init.sh
+fi
+
 cd /repo
 BASE="$(git rev-parse HEAD)"
 

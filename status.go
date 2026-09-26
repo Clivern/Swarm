@@ -15,7 +15,7 @@ import (
 
 const maxChangedFileBytes = 1 << 20 // 1 MiB
 
-func changedFilesInRepo(repoDir string) ([]ChangedFile, error) {
+func ChangedFilesInRepo(repoDir string) ([]ChangedFile, error) {
 	repo, err := git.PlainOpen(repoDir)
 	if err != nil {
 		return nil, fmt.Errorf("open repo: %w", err)
@@ -34,10 +34,10 @@ func changedFilesInRepo(repoDir string) ([]ChangedFile, error) {
 		if fs == nil || (fs.Staging == git.Unmodified && fs.Worktree == git.Unmodified) {
 			continue
 		}
-		letter := fileStatusLetter(fs)
+		letter := FileStatusLetter(fs)
 		var content string
 		if letter != "D" {
-			content, err = readWorktreeFile(repoDir, path)
+			content, err = ReadWorktreeFile(repoDir, path)
 			if err != nil {
 				return nil, fmt.Errorf("%s: %w", path, err)
 			}
@@ -52,7 +52,7 @@ func changedFilesInRepo(repoDir string) ([]ChangedFile, error) {
 	return files, nil
 }
 
-func fileStatusLetter(fs *git.FileStatus) string {
+func FileStatusLetter(fs *git.FileStatus) string {
 	code := fs.Worktree
 	if fs.Staging != git.Unmodified {
 		code = fs.Staging
@@ -63,7 +63,7 @@ func fileStatusLetter(fs *git.FileStatus) string {
 	return string([]byte{byte(code)})
 }
 
-func readWorktreeFile(repoDir, path string) (string, error) {
+func ReadWorktreeFile(repoDir, path string) (string, error) {
 	abs := filepath.Join(repoDir, filepath.FromSlash(path))
 	info, err := os.Lstat(abs)
 	if err != nil {

@@ -18,7 +18,7 @@ func TestUnitReadOut(t *testing.T) {
 `
 	assert.NoError(t, os.WriteFile(filepath.Join(dir, "pi.jsonl"), []byte(jsonl), 0o644))
 
-	summary, total, err := readOut(dir)
+	summary, total, err := ReadOut(dir)
 	assert.NoError(t, err)
 	assert.Equal(t, "Done editing const.py.", summary)
 	assert.Equal(t, 105, total)

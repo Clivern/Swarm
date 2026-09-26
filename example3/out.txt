@@ -1,0 +1,66 @@
+job id=bda707c9-23a9-4fc6-bf2d-42f94e8b0416
+cloning https://github.com/Clivern/Diffsay.git …
+========================================================================
+--- summary ---
+I'll help you add "Gemfile.lock" to LOW_PRIORITY_FILES if it's missing, then run the tests. Let me start by checking the current state of the file.
+
+Now I'll add "Gemfile.lock" to the LOW_PRIORITY_FILES set:
+
+Now let me run the tests:
+
+Excellent! I've successfully added "Gemfile.lock" to the LOW_PRIORITY_FILES set and all tests pass. Here are the full test results:
+
+## Summary
+✅ **"Gemfile.lock" added to LOW_PRIORITY_FILES** in `src/diffsay/const.py`
+
+## Full Test Results
+```
+============================= test session starts ==============================
+platform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0
+rootdir: /repo
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.15.1
+
+17 tests collected
+
+tests/test_cli.py::test_resolve_bare_name                               PASSED [  5%]
+tests/test_cli.py::test_resolve_full_huggingface_id                     PASSED [ 11%]
+tests/test_cli.py::test_resolve_other_org                               PASSED [ 17%]
+tests/test_cli.py::test_resolve_local_path                              PASSED [ 23%]
+tests/test_cli.py::test_clean_message_strips_fences_and_end_token       PASSED [ 29%]
+tests/test_cli.py::test_staged_diff_decodes_git_output                  PASSED [ 35%]
+tests/test_cli.py::test_main_exits_when_nothing_is_staged               PASSED [ 41%]
+tests/test_cli.py::test_prepare_keeps_small_diffs                       PASSED [ 47%]
+tests/test_cli.py::test_prepare_caps_large_hunks                        PASSED [ 52%]
+tests/test_cli.py::test_prepare_reports_lockfile_without_content        PASSED [ 58%]
+tests/test_cli.py::test_prepare_reports_minified_assets_without_content PASSED [ 64%]
+tests/test_cli.py::test_main_warns_when_diff_is_truncated               PASSED [ 70%]
+tests/test_cli.py::test_main_prints_when_not_interactive                PASSED [ 76%]
+tests/test_cli.py::test_main_print_only_skips_commit                    PASSED [ 82%]
+tests/test_cli.py::test_main_commits_edited_message                     PASSED [ 88%]
+tests/test_cli.py::test_spinner_is_silent_without_tty                   PASSED [ 94%]
+tests/test_cli.py::test_spinner_writes_immediately_when_tty             PASSED [100%]
+
+============================== 17 passed in 0.05s ==============================
+```
+
+**Result: ✅ All 17 tests passed!**
+
+The change has been successfully applied. "Gemfile.lock" (Ruby's lock file) is now included in the LOW_PRIORITY_FILES set alongside other dependency lock files like Cargo.lock, package-lock.json, poetry.lock, etc.
+total_tokens=4852
+--- changed files ---
+M       src/diffsay/const.py
+--- patch ---
+diff --git a/src/diffsay/const.py b/src/diffsay/const.py
+index d39ccea..09117ff 100644
+--- a/src/diffsay/const.py
++++ b/src/diffsay/const.py
+@@ -10,6 +10,7 @@ DIFF_FILE_RE = re.compile(r"^diff --git a/.+ b/(.+)$", re.MULTILINE)
+ LOW_PRIORITY_FILES = {
+     "Cargo.lock",
+     "composer.lock",
++    "Gemfile.lock",
+     "go.sum",
+     "package-lock.json",
+     "pnpm-lock.yaml",

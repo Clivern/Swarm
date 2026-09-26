@@ -26,7 +26,13 @@ result, err := swarm.Run(ctx, swarm.RunRequest{
     Prompt:           "Add Gemfile.lock to LOW_PRIORITY_FILES",
     PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
     OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
-    DockerImage:      "clivern/swarm:v0.8.1",
+    DockerImage: "clivern/swarm:v0.8.2",
+    Container: swarm.Container{
+        Memory: "2g",
+        CPUs:   "1",
+        InitScript: ".swarm/init.sh", // optional, file in the cloned repo
+        InitBash:   "apt-get update && apt-get install -y jq", // optional, written to job out/init.sh
+    },
     Cleanup: true,
 })
 

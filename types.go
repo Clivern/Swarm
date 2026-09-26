@@ -4,43 +4,38 @@
 package swarm
 
 // GitCloneAuth supplies credentials for cloning private repositories.
-// Use Token for HTTPS URLs; use SSHPrivateKeyPath for git@ or ssh:// URLs.
 type GitCloneAuth struct {
-	// Token is the HTTPS password (e.g. GitHub/GitLab personal access token).
-	Token string
-	// Username for HTTPS basic auth. Empty with Token defaults to x-access-token (GitHub).
-	// GitLab deploy tokens often use gitlab-ci-token; OAuth-style clones may use oauth2.
-	Username string
-	// SSHPrivateKeyPath is the private key file for git@ or ssh:// remotes.
+	Token             string
+	Username          string
 	SSHPrivateKeyPath string
 }
 
 // RunRequest configures a Pi Docker run against a cloned repository.
 type RunRequest struct {
-	// WorkDir is the parent directory (e.g. /tmp/basement); each job uses WorkDir/ID/.
-	WorkDir string
-	// ID uniquely names the workspace (e.g. a UUID).
-	ID string
-	// RepoURL is cloned into WorkDir/ID/repo when missing.
-	RepoURL string
-	// GitCloneAuth authenticates private repo clones (HTTPS token or SSH key).
-	GitCloneAuth GitCloneAuth
-
+	WorkDir          string
+	ID               string
+	RepoURL          string
+	GitCloneAuth     GitCloneAuth
 	Prompt           string
 	PIModel          string
 	OpenRouterAPIKey string
+	DockerImage      string
+	Container        Container
+	Cleanup          bool
+}
 
-	// DockerImage is the Pi image (e.g. clivern/swarm:v0.8.1).
-	DockerImage string
-	// Cleanup deletes WorkDir/ID (repo and out) after a successful run.
-	Cleanup bool
+// Container configures init and docker run limits.
+type Container struct {
+	InitScript string
+	InitBash   string
+	Memory     string
+	CPUs       string
 }
 
 // ChangedFile describes one path touched by the agent.
 type ChangedFile struct {
-	Path   string
-	Status string // M, A, D, …
-	// Content is the file after the run (worktree). Empty when deleted.
+	Path    string
+	Status  string
 	Content string
 }
 
@@ -54,11 +49,13 @@ type Result struct {
 	OutDir       string
 }
 
-type dockerParams struct {
+type DockerParams struct {
 	image            string
 	openRouterAPIKey string
 	prompt           string
 	piModel          string
 	repoDir          string
 	outDir           string
+	container        Container
+	initScript       string
 }

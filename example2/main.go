@@ -40,8 +40,12 @@ func main() {
 		Prompt:           prompt,
 		PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
 		OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
-		DockerImage:      "clivern/swarm:v0.8.1",
-		Cleanup:          true,
+		DockerImage:      "clivern/swarm:v0.8.2",
+		Container: swarm.Container{
+			Memory: "2g",
+			CPUs:   "1",
+		},
+		Cleanup: true,
 	})
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "run failed: %v\n", err)

@@ -52,7 +52,7 @@ func EnsureClone(ctx context.Context, repoURL, dest string, auth GitCloneAuth) e
 		return fmt.Errorf("repo URL is empty")
 	}
 
-	cloneAuth, err := cloneAuth(repoURL, auth)
+	cloneAuth, err := CloneAuth(repoURL, auth)
 	if err != nil {
 		return err
 	}
