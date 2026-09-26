@@ -6,7 +6,7 @@
 //
 // Prerequisites:
 //   - export OPENROUTER_API_KEY=sk-or-...
-//   - clivern/swarm:v0.8.2
+//   - clivern/swarm:v0.8.3
 //
 // Run:
 //
@@ -48,7 +48,7 @@ func main() {
 		Prompt:           prompt,
 		PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
 		OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
-		DockerImage:      "clivern/swarm:v0.8.2",
+		DockerImage:      "clivern/swarm:v0.8.3",
 		Container: swarm.Container{
 			InitBash: initBash,
 			Memory:   "2g",

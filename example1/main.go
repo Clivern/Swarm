@@ -117,7 +117,7 @@ func main() {
 				Prompt:           prompt,
 				PIModel:          "openrouter/anthropic/claude-sonnet-4.5",
 				OpenRouterAPIKey: os.Getenv("OPENROUTER_API_KEY"),
-				DockerImage:      "clivern/swarm:v0.8.2",
+				DockerImage:      "clivern/swarm:v0.8.3",
 				Container: swarm.Container{
 					Memory: "2g",
 					CPUs:   "1",
