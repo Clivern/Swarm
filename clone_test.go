@@ -4,11 +4,34 @@
 package swarm
 
 import (
+	"context"
+	"os"
+	"path/filepath"
 	"testing"
 
 	githttp "github.com/go-git/go-git/v5/plumbing/transport/http"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestUnitEnsureClone(t *testing.T) {
+	t.Run("skips when git present", func(t *testing.T) {
+		dest := filepath.Join(t.TempDir(), "repo")
+		assert.NoError(t, os.MkdirAll(filepath.Join(dest, ".git"), 0o755))
+
+		err := EnsureClone(context.Background(), "https://example.com/nope.git", dest, GitCloneAuth{})
+		assert.NoError(t, err)
+	})
+
+	t.Run("public repository", func(t *testing.T) {
+		if testing.Short() {
+			t.Skip("network clone")
+		}
+		dest := filepath.Join(t.TempDir(), "repo")
+		err := EnsureClone(context.Background(), "https://github.com/octocat/Hello-World.git", dest, GitCloneAuth{})
+		assert.NoError(t, err)
+		assert.DirExists(t, filepath.Join(dest, ".git"))
+	})
+}
 
 func TestUnitCloneAuth(t *testing.T) {
 	t.Run("public HTTPS", func(t *testing.T) {

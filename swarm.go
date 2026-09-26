@@ -16,17 +16,9 @@ func Run(ctx context.Context, req RunRequest) (*Result, error) {
 		return nil, err
 	}
 
-	repoDir, outDir, err := WorkspacePaths(req.WorkDir, req.ID)
+	repoDir, outDir, err := SetupWorkspace(req.WorkDir, req.ID)
 	if err != nil {
 		return nil, err
-	}
-
-	if err := os.MkdirAll(filepath.Dir(repoDir), 0o755); err != nil {
-		return nil, fmt.Errorf("create workspace parent: %w", err)
-	}
-
-	if err := os.MkdirAll(outDir, 0o755); err != nil {
-		return nil, fmt.Errorf("create out dir: %w", err)
 	}
 
 	if err := EnsureClone(ctx, req.RepoURL, repoDir, req.GitCloneAuth); err != nil {
@@ -80,7 +72,7 @@ func Run(ctx context.Context, req RunRequest) (*Result, error) {
 	}
 
 	if req.Cleanup {
-		if err := RemoveJobDir(req.WorkDir, req.ID); err != nil {
+		if err := RemoveRepoDir(req.WorkDir, req.ID); err != nil {
 			return nil, err
 		}
 	}

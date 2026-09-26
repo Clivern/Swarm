@@ -70,6 +70,7 @@ func WriteInitBash(outDir, bash string) error {
 	if strings.TrimSpace(bash) == "" {
 		return nil
 	}
+
 	path := filepath.Join(outDir, "init.sh")
 	body := "#!/usr/bin/env bash\nset -euo pipefail\n" + bash + "\n"
 	return os.WriteFile(path, []byte(body), 0o755)
