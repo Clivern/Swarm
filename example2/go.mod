@@ -3,7 +3,7 @@ module github.com/clivern/swarm/example2
 go 1.26.0
 
 require (
-	github.com/clivern/swarm v0.8.4
+	github.com/clivern/swarm v0.8.5
 	github.com/google/uuid v1.6.0
 )
 

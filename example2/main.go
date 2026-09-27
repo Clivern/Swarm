@@ -37,7 +37,7 @@ func main() {
 		Prompt:      prompt,
 		PIModel:     "openrouter/anthropic/claude-sonnet-4.5",
 		ProxyURL:    "http://host.docker.internal:8080/api",
-		DockerImage: "clivern/swarm:v0.8.4",
+		DockerImage: "clivern/swarm:v0.8.5",
 		Container: swarm.Container{
 			Memory: "2g",
 			CPUs:   "1",

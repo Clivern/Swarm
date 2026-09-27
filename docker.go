@@ -11,6 +11,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 func RunDocker(ctx context.Context, p DockerParams) error {
@@ -38,6 +39,7 @@ func RunDocker(ctx context.Context, p DockerParams) error {
 
 	args := []string{
 		"run", "--rm",
+		"--name", p.ID,
 		"--memory", c.Memory,
 		"--cpus", c.CPUs,
 	}
@@ -53,6 +55,11 @@ func RunDocker(ctx context.Context, p DockerParams) error {
 	)
 
 	cmd := exec.CommandContext(ctx, "docker", args...)
+	cmd.Cancel = func() error {
+		return exec.Command("docker", "kill", p.ID).Run()
+	}
+	cmd.WaitDelay = 15 * time.Second
+
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 
