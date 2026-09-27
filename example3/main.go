@@ -5,7 +5,7 @@
 // Init installs Python; Pi then edits const.py and runs pytest.
 //
 // Prerequisites:
-//   - clivern/swarm:v0.8.3
+//   - clivern/swarm:v0.8.4
 //
 // Run:
 //
@@ -47,7 +47,7 @@ func main() {
 		Prompt:      prompt,
 		PIModel:     "openrouter/anthropic/claude-sonnet-4.5",
 		ProxyURL:    "http://host.docker.internal:8080/api",
-		DockerImage: "clivern/swarm:v0.8.3",
+		DockerImage: "clivern/swarm:v0.8.4",
 		Container: swarm.Container{
 			InitBash: initBash,
 			Memory:   "2g",
