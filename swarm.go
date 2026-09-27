@@ -37,7 +37,7 @@ func Run(ctx context.Context, req RunRequest) (*Result, error) {
 
 	if err := RunDocker(ctx, DockerParams{
 		Image:      req.DockerImage,
-		ProxyKey:   req.ProxyKey,
+		ID:         req.ID,
 		ProxyURL:   strings.TrimSpace(req.ProxyURL),
 		Prompt:     req.Prompt,
 		PIModel:    req.PIModel,

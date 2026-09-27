@@ -13,7 +13,7 @@ func (req RunRequest) validate() error {
 		{"Repository URL", req.RepoURL},
 		{"Prompt", req.Prompt},
 		{"PI Model", req.PIModel},
-		{"ProxyKey", req.ProxyKey},
+		{"ID", req.ID},
 		{"ProxyURL", req.ProxyURL},
 		{"Docker Image", req.DockerImage},
 		{"Container.Memory", req.Container.Memory},

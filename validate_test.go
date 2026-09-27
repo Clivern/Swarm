@@ -16,7 +16,6 @@ func validRunRequest() RunRequest {
 		RepoURL:     "https://github.com/example/repo.git",
 		Prompt:      "do something",
 		PIModel:     "openrouter/anthropic/claude-sonnet-4.5",
-		ProxyKey:    "sk-or-test",
 		ProxyURL:    "https://openrouter.ai/api/v1",
 		DockerImage: "swarm-pi:local",
 		Container: Container{
@@ -55,12 +54,12 @@ func TestUnitRunRequestValidate(t *testing.T) {
 		assert.ErrorContains(t, err, "PI Model is required")
 	})
 
-	t.Run("missing proxy key", func(t *testing.T) {
+	t.Run("missing ID", func(t *testing.T) {
 		req := validRunRequest()
-		req.ProxyKey = ""
+		req.ID = ""
 		err := req.validate()
 		assert.Error(t, err)
-		assert.ErrorContains(t, err, "ProxyKey is required")
+		assert.ErrorContains(t, err, "ID is required")
 	})
 
 	t.Run("missing proxy URL", func(t *testing.T) {

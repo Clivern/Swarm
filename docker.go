@@ -26,7 +26,7 @@ func RunDocker(ctx context.Context, p DockerParams) error {
 
 	c := p.Container
 	env := []string{
-		fmt.Sprintf("PROXY_KEY=%s", p.ProxyKey),
+		fmt.Sprintf("RUN_ID=%s", p.ID),
 		fmt.Sprintf("PROXY_URL=%s", p.ProxyURL),
 		fmt.Sprintf("PROMPT=%s", p.Prompt),
 		fmt.Sprintf("PI_MODEL=%s", p.PIModel),

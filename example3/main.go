@@ -5,7 +5,6 @@
 // Init installs Python; Pi then edits const.py and runs pytest.
 //
 // Prerequisites:
-//   - export PROXY_KEY=sk-or-...
 //   - clivern/swarm:v0.8.3
 //
 // Run:
@@ -47,7 +46,6 @@ func main() {
 		RepoURL:     diffsayRepo,
 		Prompt:      prompt,
 		PIModel:     "openrouter/anthropic/claude-sonnet-4.5",
-		ProxyKey:    os.Getenv("PROXY_KEY"),
 		ProxyURL:    "http://host.docker.internal:8080/api",
 		DockerImage: "clivern/swarm:v0.8.3",
 		Container: swarm.Container{
