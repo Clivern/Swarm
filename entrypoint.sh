@@ -38,6 +38,7 @@ fi
 
 mkdir -p "${HOME}/.pi/agent"
 echo "{\"providers\":{\"openrouter\":{\"baseUrl\":\"${PROXY_URL}\",\"apiKey\":\"\$RUN_ID\"}}}" > "${HOME}/.pi/agent/models.json"
+echo "{\"openrouter\":{\"type\":\"api_key\",\"key\":\"${RUN_ID}\"}}" > "${HOME}/.pi/agent/auth.json"
 
 cd /repo
 BASE="$(git rev-parse HEAD)"
