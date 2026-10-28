@@ -2,7 +2,7 @@
 # License can be found in the LICENSE file.
 #
 # Headless Pi on a mounted git repo (published as clivern/swarm on Docker Hub).
-FROM node:24-bookworm-slim
+FROM node:26-bookworm-slim
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends git ca-certificates \
